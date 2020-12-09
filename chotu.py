@@ -10,38 +10,45 @@ import random
 greetings =['hello','hi','hey']
 intro = ["Myself Chotu! What can i do for you, sir","Hey boss! I am your voice assistant ","It is wonderful to have you again, sir!"]
 
+
+def search(words):
+    ent1.insert(tk.END,"SWITCHING TO GOOGLE")
+    wb.open_new("https://www.google.com/search?client=safari&rls=en&q="+'+'.join(words[1:])+"&ie=UTF-8&oe=UTF-8")
+def play(words):
+    ent1.insert(tk.END,"SWITCHING TO YOUTUBE")
+    wb.open_new("https://www.youtube.com/results?search_query="+'+'.join(words[1:]))
+def wiki(words):
+    ans = wikipedia.summary(' '.join(words[2:]),sentences =1) # rn voice ain't working may be my mac sucks
+    ent1.insert(tk.END,ans)
+    speaker.say(ans)
+    speaker.runAndWait()
+    wb.open_new("https://en.wikipedia.org/wiki/"+'_'.join(words[2:]))   #https://en.wikipedia.org/wiki/Bill_Gates
 speaker = pyttsx3.init()
 def rec():
 
     r = sr.Recognizer()
     with sr.Microphone() as source:
         audio = r.listen(source)
-        sentence = r.recognize_google(audio,language="en-in")
+        sentence = r.recognize_google(audio,language="en-us")
         words = sentence.split()
         ent2.insert(tk.END,sentence)
 
     for each in words:
         if each == "what" or each =="who":
-            ans = wikipedia.summary(' '.join(words[2:]),sentences =1) # rn voice ain't working may be my mac sucks
-            ent1.insert(tk.END,ans)
-            speaker.say(ans)
-            speaker.runAndWait()
-            wb.open_new("https://en.wikipedia.org/wiki/"+'_'.join(words[2:]))   #https://en.wikipedia.org/wiki/Bill_Gates
+            wiki(words)
             
         elif each == 'play' :
-            ent1.insert(tk.END,"SWITCHING TO YOUTUBE")
-            wb.open_new("https://www.youtube.com/results?search_query="+'+'.join(words[1:]))
+            play(words)
 
         elif each == 'search':
-             ent1.insert(tk.END,"SWITCHING TO GOOGLE")
-             wb.open_new("https://www.google.com/search?client=safari&rls=en&q="+'+'.join(words[1:])+"&ie=UTF-8&oe=UTF-8")
+            search(words)
         
         elif each in greetings:
             x = random.randint(0,len(intro))
             ent1.insert(tk.END,greetings[x])
             speaker.say(intro[x])
             speaker.runAndWait()
-            
+            pass
         
         elif each=='close' or each =="bye" or each == "quit" or each == "exit":
             wish= "BYE ! SEE YA LATER"

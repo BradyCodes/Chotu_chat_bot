@@ -57,9 +57,9 @@ def rec():
             speaker.runAndWait()
             # time.sleep(3)     #speaker itself terminates the window
             # window.destroy() 
-
-    # ent1.delete('1.0',tk.END)   #--> if executed then no values in text boxes from the very start
-    # ent2.delete("1.0",tk.END)
+    time.sleep(5)
+    ent1.delete('1.0',tk.END)   #--> if executed then no values in text boxes from the very start
+    ent2.delete("1.0",tk.END)
 
 #creating gui
 
